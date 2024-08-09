@@ -23,7 +23,7 @@ public class MouseMovementX : MonoBehaviour
         xRotation -= mouseY;
  
         //we clamp the rotation so we cant Over-rotate (like in real life)
-        xRotation = Mathf.Clamp(xRotation, 40f, 130f);
+        xRotation = Mathf.Clamp(xRotation, -40f, 40f);
  
         //applying x rotation
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
