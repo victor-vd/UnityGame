@@ -7,8 +7,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
  
-    public float speed = 12f;
-    public float sprintFactor = 3f;
+    public float speed = 10f;
+    public float gravity = -9.81f * 2;
+    public float sprintFactor = 2f;
+    public float jumpHeight = 3f;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -34,15 +36,25 @@ public class PlayerMovement : MonoBehaviour
  
         //right is the red Axis, foward is the blue axis
         Vector3 move = transform.right * x + transform.forward * z;
+        
         if (Input.GetKey(KeyCode.LeftShift))
         {
             controller.Move(move * speed * sprintFactor * Time.deltaTime);
         }
         else
         {
-            
             controller.Move(move * speed * Time.deltaTime);
         }
+
+        Debug.Log(isGrounded);
+        //check if the player is on the ground so he can jump
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            //the equation for jumping
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity)*2;
+        }
+ 
+        velocity.y += gravity * Time.deltaTime*5;
  
         controller.Move(velocity * Time.deltaTime);
     }
